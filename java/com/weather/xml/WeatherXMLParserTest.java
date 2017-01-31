@@ -78,7 +78,7 @@ public class WeatherXMLParserTest {
 
     }
 
-    private WeatherData getWeatherDataEntity() {
+    public WeatherData getWeatherDataEntity() {
         WeatherData weatherData = new WeatherData();
         Forecast forecast = new Forecast();
         List<Time> timeList = new ArrayList<>();
