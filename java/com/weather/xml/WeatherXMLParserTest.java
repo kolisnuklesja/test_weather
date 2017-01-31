@@ -1,7 +1,6 @@
 package com.weather.xml;
 
 import com.weather.entity.*;
-import com.weather.xml.WeatherXMLParser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
