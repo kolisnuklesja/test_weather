@@ -36,6 +36,7 @@ public class WeatherXMLParserTest {
     @Autowired
     private WeatherData weatherData;
 
+
     @Test
     public void testGetWeatherData() throws Exception {
         MockRestServiceServer server = MockRestServiceServer.bindTo(weatherXMLParser.getRestTemplate()).build();
