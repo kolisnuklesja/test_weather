@@ -4,35 +4,21 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * Created by Tanya on 01.02.2017.
+ * Created by Tanya on 02.02.2017.
  */
 @Entity
-public class Role {
-    public Role(String name) {
-        this.name = name;
-    }
-
-    public Role() {
-    }
-
+public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "idrole")
+    @Column(name = "idcity")
     private Long idrole;
 
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Weather> weather;
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
 
     public Long getIdrole() {
         return idrole;

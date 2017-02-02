@@ -8,8 +8,7 @@ import java.util.List;
  * Created by Tanya on 01.02.2017.
  */
 @Entity
-@Table(name = "user")
-public class User implements Serializable{
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,6 +28,8 @@ public class User implements Serializable{
             inverseJoinColumns = @JoinColumn(name = "idrole"))
     public List<Role> roles;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UserRequest> requests;
 
     public User() {
     }
@@ -70,5 +71,13 @@ public class User implements Serializable{
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<UserRequest> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<UserRequest> requests) {
+        this.requests = requests;
     }
 }

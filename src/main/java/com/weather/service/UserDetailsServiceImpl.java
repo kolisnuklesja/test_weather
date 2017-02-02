@@ -18,7 +18,7 @@ import java.util.List;
  * Created by Tanya on 01.02.2017.
  */
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService{
+public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
@@ -27,11 +27,15 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 
         User user = userRepository.findByUsername(username);
 
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        for (Role role : user.getRoles()){
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+        if (null == user) {
+            throw new UsernameNotFoundException("No user present with username: " + username);
+        } else {
+            List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+            for (Role role : user.getRoles()) {
+                grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+            }
+            return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
         }
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
     }
 }
