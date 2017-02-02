@@ -40,6 +40,9 @@
         <tr>
             <td colspan="2"><input type="submit" name="login" class="login-submit" value="Login"></td>
         </tr>
+        <tr>
+            <td><a href="/register">Регистрация</a></td>
+        </tr>
     </table>
 </form:form>
 

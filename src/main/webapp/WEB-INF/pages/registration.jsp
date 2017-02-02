@@ -41,7 +41,7 @@
             <td colspan="2"><input type="submit" value="Register"></td>
         </tr>
         <tr>
-            <td colspan="2"><a href="/register">Авторизация</a></td>
+            <td colspan="2"><a href="/">Авторизация</a></td>
         </tr>
     </table>
 </form:form>
