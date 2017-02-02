@@ -1,4 +1,4 @@
-package com.weather.service;
+package com.weather.service.impl;
 
 import com.weather.model.Role;
 import com.weather.model.User;

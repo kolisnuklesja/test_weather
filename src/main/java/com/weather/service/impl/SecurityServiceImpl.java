@@ -1,5 +1,6 @@
-package com.weather.service;
+package com.weather.service.impl;
 
+import com.weather.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
  * Created by Tanya on 01.02.2017.
  */
 @Service
-public class SecurityServiceImpl implements SecurityService{
+public class SecurityServiceImpl implements SecurityService {
 
     @Autowired
     private AuthenticationManager authenticationManager;

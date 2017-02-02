@@ -156,4 +156,22 @@ public class Weather {
     public void setWindDirection(String windDirection) {
         this.windDirection = windDirection;
     }
+
+    @Override
+    public String toString() {
+        return "Weather{" +
+                "idweather=" + idweather +
+                ", cloudsName='" + cloudsName + '\'' +
+                ", cloudsValue=" + cloudsValue +
+                ", windSpeedValue=" + windSpeedValue +
+                ", windSpeedName='" + windSpeedName + '\'' +
+                ", temperatureValue=" + temperatureValue +
+                ", temperatureMin=" + temperatureMin +
+                ", temperatureMax=" + temperatureMax +
+                ", timeFrom=" + timeFrom +
+                ", timeTo=" + timeTo +
+                ", humidityValue=" + humidityValue +
+                ", windDirection='" + windDirection + '\'' +
+                '}';
+    }
 }

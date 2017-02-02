@@ -3,8 +3,11 @@ package com.weather.controller;
 import com.weather.entity.Time;
 import com.weather.entity.WeatherData;
 import com.weather.model.User;
+import com.weather.service.CityService;
 import com.weather.service.SecurityService;
 import com.weather.service.UserService;
+import com.weather.service.WeatherService;
+import com.weather.service.impl.WeatherServiceImpl;
 import com.weather.validator.UserValidator;
 import com.weather.xml.WeatherXMLParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +42,12 @@ public class WeatherController {
 
     @Autowired
     private UserValidator userValidator;
+
+    @Autowired
+    private WeatherService weatherService;
+
+    @Autowired
+    private CityService cityService;
 
 
     @RequestMapping("/")
@@ -79,7 +88,11 @@ public class WeatherController {
         List<Time> result = null;
         weatherData = weatherXMLParser.getTimeListByCity(city);
         if (weatherData != null)
+        {
             result = weatherData.getForecast().getTimeList();
+            weatherService.save(result, cityService.findByCityName(city));
+        }
+
         return result;
     }
 

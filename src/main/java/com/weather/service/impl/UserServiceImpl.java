@@ -1,9 +1,10 @@
-package com.weather.service;
+package com.weather.service.impl;
 
 import com.weather.model.Role;
 import com.weather.model.User;
 import com.weather.repository.RoleRepository;
 import com.weather.repository.UserRepository;
+import com.weather.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,10 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private RoleRepository roleRepository;
 

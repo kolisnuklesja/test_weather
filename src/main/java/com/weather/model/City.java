@@ -1,13 +1,14 @@
 package com.weather.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Tanya on 02.02.2017.
  */
 @Entity
-public class City {
+public class City implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idcity")
