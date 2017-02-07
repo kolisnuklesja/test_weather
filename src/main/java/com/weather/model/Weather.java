@@ -18,6 +18,10 @@ public class Weather {
     @JoinColumn(name = "idcity")
     private City city;
 
+    @ManyToOne
+    @JoinColumn(name = "iduser")
+    private User user;
+
     @Column(name = "clouds_name")
     private String cloudsName;
 
@@ -52,6 +56,15 @@ public class Weather {
 
     @Column(name = "wind_direction")
     private String windDirection;
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Long getIdweather() {
         return idweather;
@@ -155,23 +168,5 @@ public class Weather {
 
     public void setWindDirection(String windDirection) {
         this.windDirection = windDirection;
-    }
-
-    @Override
-    public String toString() {
-        return "Weather{" +
-                "idweather=" + idweather +
-                ", cloudsName='" + cloudsName + '\'' +
-                ", cloudsValue=" + cloudsValue +
-                ", windSpeedValue=" + windSpeedValue +
-                ", windSpeedName='" + windSpeedName + '\'' +
-                ", temperatureValue=" + temperatureValue +
-                ", temperatureMin=" + temperatureMin +
-                ", temperatureMax=" + temperatureMax +
-                ", timeFrom=" + timeFrom +
-                ", timeTo=" + timeTo +
-                ", humidityValue=" + humidityValue +
-                ", windDirection='" + windDirection + '\'' +
-                '}';
     }
 }

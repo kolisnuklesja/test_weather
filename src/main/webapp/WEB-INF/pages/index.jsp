@@ -17,6 +17,7 @@
     <input type="text" name="city" id="searchText">
     <input type="button" value="Get weather" id="but">
 </form:form>
+<a href="/forecast">Добавить прогноз за день</a>
 <div id="results"></div>
 </body>
 </html>
