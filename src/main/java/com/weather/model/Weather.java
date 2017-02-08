@@ -139,19 +139,19 @@ public class Weather {
     }
 
     public Date getTimeFrom() {
-        return timeFrom;
+        return new Date(timeFrom.getTime());
     }
 
     public void setTimeFrom(Date timeFrom) {
-        this.timeFrom = timeFrom;
+        this.timeFrom = new Date(timeFrom.getTime());
     }
 
     public Date getTimeTo() {
-        return timeTo;
+        return new Date(timeTo.getTime());
     }
 
     public void setTimeTo(Date timeTo) {
-        this.timeTo = timeTo;
+        this.timeTo = new Date(timeTo.getTime());
     }
 
     public int getHumidityValue() {
@@ -168,5 +168,23 @@ public class Weather {
 
     public void setWindDirection(String windDirection) {
         this.windDirection = windDirection;
+    }
+
+    @Override
+    public String toString() {
+        return "Weather{" +
+                "idweather=" + idweather +
+                ", cloudsName='" + cloudsName + '\'' +
+                ", cloudsValue=" + cloudsValue +
+                ", windSpeedValue=" + windSpeedValue +
+                ", windSpeedName='" + windSpeedName + '\'' +
+                ", temperatureValue=" + temperatureValue +
+                ", temperatureMin=" + temperatureMin +
+                ", temperatureMax=" + temperatureMax +
+                ", timeFrom=" + timeFrom +
+                ", timeTo=" + timeTo +
+                ", humidityValue=" + humidityValue +
+                ", windDirection='" + windDirection + '\'' +
+                '}';
     }
 }

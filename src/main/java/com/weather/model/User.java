@@ -26,7 +26,7 @@ public class User implements Serializable {
             name = "user_has_role",
             joinColumns = @JoinColumn(name = "iduser"),
             inverseJoinColumns = @JoinColumn(name = "idrole"))
-    public List<Role> roles;
+    private List<Role> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UserRequest> requests;

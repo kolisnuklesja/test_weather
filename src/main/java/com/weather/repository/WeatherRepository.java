@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface WeatherRepository extends CrudRepository<Weather, Long> {
 
-    Weather findByCityAndTimeFrom(City city, Date timeFrom);
+    Weather findByCityAndTimeFrom(City city, java.util.Date timeFrom);
 
     @Query("select distinct w.cloudsName from Weather w where w.user = null")
     List<String> findDistinctCloudsName();
@@ -24,4 +24,12 @@ public interface WeatherRepository extends CrudRepository<Weather, Long> {
     @Query("select distinct w.windDirection from Weather w where w.user = null")
     List<String> findDistinctWindDirection();
 
+    @Query("select AVG(w.temperatureValue) from  Weather w where w.user = null  and w.city.idcity = ?1 and " +
+            "w.timeFrom between ?2 and ?3 and w.timeTo between ?2 and ?3")
+    double findAVGTemperetureFromTo(Long idcity, Date from, Date to);
+
 }
+//    and w.city = ?1 " +
+//        "and w.timeFrom between ?2 and ?3 and w.timeTo between ?2 and ?3
+
+//    City city, Date from, Date to

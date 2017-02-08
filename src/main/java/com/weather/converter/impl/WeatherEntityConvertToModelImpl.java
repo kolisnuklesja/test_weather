@@ -20,12 +20,12 @@ public class WeatherEntityConvertToModelImpl implements WeatherEntityConvertToMo
 
     public WeatherEntityConvertToModelImpl() {
         format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        weather = new Weather();
+
     }
 
     @Override
     public Weather converter(Time time) {
-
+        weather = new Weather();
         try {
             weather.setTimeFrom(format.parse(time.getFrom()));
             weather.setTimeTo(format.parse(time.getTo()));
@@ -46,6 +46,7 @@ public class WeatherEntityConvertToModelImpl implements WeatherEntityConvertToMo
 
     @Override
     public Weather converter(WeatherDTO weatherDTO) {
+        weather = new Weather();
       format = new SimpleDateFormat("yyyy-MM-dd");
 
 

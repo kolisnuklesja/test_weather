@@ -21,6 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -54,6 +59,54 @@ public class WeatherController {
 
     @RequestMapping("/")
     public ModelAndView welcome() throws Exception {
+//        GregorianCalendar calen = new GregorianCalendar(2016, 1, 1);
+//        LocalDate specificDate = LocalDate.of(2016, Month.JANUARY, 1);
+//        LocalDateTime localDateTime = LocalDateTime.of(specificDate, LocalTime.of(0, 0, 0));
+//        List<String> clouds = weatherService.getDistinctCloudsName();
+//        List<String> winddirection = weatherService.getDistinctWindDirection();
+//        List<String> windspeed = weatherService.getDistinctWindSpeed();
+//        List<Time> list = new ArrayList<>();
+//        Time time ;
+//        Random r = new Random();
+//        WindDirection wDirection;
+//        WindSpeed wSpeed;
+//        Humidity humidity;
+//        Temperature temperature;
+//        Clouds clouds1;
+//        int t;
+//        for (int i = 0; i < 365; i++) {
+//            time = new Time();
+//            wDirection = new WindDirection();
+//            wSpeed = new WindSpeed();
+//            humidity = new Humidity();
+//            temperature = new Temperature();
+//            clouds1 = new Clouds();
+//            localDateTime = localDateTime.plusDays(1);
+//            time.setFrom(localDateTime.toString() + ":00");
+//            time.setTo(localDateTime.toString() + ":00");
+//            t = winddirection.size();
+//            wDirection.setName(winddirection.get(r.nextInt(t)));
+//            time.setWindDirection(wDirection);
+//            t = windspeed.size();
+//            wSpeed.setName(windspeed.get(r.nextInt(t)));
+//            wSpeed.setMps(String.valueOf(r.nextInt(6)));
+//            time.setWindSpeed(wSpeed);
+//            humidity.setValue(String.valueOf(r.nextInt(100)));
+//            time.setHumidity(humidity);
+//            t = r.nextInt(60) - 30;
+//            temperature.setMin(String.valueOf(t));
+//            temperature.setMax(String.valueOf(t));
+//            temperature.setValue(String.valueOf(t));
+//            time.setTemperature(temperature);
+//            clouds1.setValue(clouds.get(r.nextInt(clouds.size())));
+//            clouds1.setAll(String.valueOf(r.nextInt(clouds.size())));
+//            time.setClouds(clouds1);
+//            System.out.println(time.getFrom()+ " - " + time.getTemperature().getValue());
+//            list.add(time);
+//
+//        }
+//
+//        weatherService.save(list, cityService.findOrCreateByCityName("Minsk"));
         return new ModelAndView("login");
     }
 
@@ -73,7 +126,7 @@ public class WeatherController {
     @RequestMapping("/register/new")
     public String registerUser(@ModelAttribute("userForm") User user, BindingResult bindingResult) {
         userValidator.validate(user, bindingResult);
-      if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "registration";
         }
         userService.save(user);
@@ -88,7 +141,7 @@ public class WeatherController {
         weatherData = weatherXMLParser.getTimeListByCity(city);
         if (weatherData != null) {
             result = weatherData.getForecast().getTimeList();
-            weatherService.save(result, cityService.findByCityName(city));
+            weatherService.save(result, cityService.findOrCreateByCityName(city));
         }
 
         return result;
@@ -117,7 +170,20 @@ public class WeatherController {
             return "userforecast";
         }
 
-        weatherService.saveUserForecast(forecastForm, userService.findByUsername(authentication.getName()));
+        weatherService.saveUserForecast(forecastForm, userService.findByUsername(authentication.getName()),
+                cityService.findOrCreateByCityName("Minsk"));
         return "redirect:/login";
+    }
+
+    @RequestMapping("avgtempreture")
+    public ModelAndView getAVGTempreture(ModelAndView modelAndView) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        String from = LocalDateTime.of(LocalDate.of(2016, 1, 1), LocalTime.of(0, 0, 0)).toString()+":00",
+                to = LocalDateTime.of(LocalDate.of(2016, 1, 2), LocalTime.of(0, 0, 0)).toString()+":00";
+        double d = weatherService.getAVGTempretureFromTo(cityService.findOrCreateByCityName("Minsk"),
+                format.parse(from), format.parse(to));
+        modelAndView.setViewName("index");
+        modelAndView.addObject("result", d);
+        return modelAndView;
     }
 }

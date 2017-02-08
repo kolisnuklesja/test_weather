@@ -12,6 +12,9 @@ import com.weather.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -26,17 +29,14 @@ public class WeatherServiceImpl implements WeatherService {
     @Autowired
     private WeatherEntityConvertToModel weatherEntityConvertToModel;
 
-    @Autowired
-    private CityService cityService;
-
     @Override
     public void save(List<Time> weatherList, City city) {
         Weather weather, weatherSearch;
-        for (Time time : weatherList) {
+        for (Time time:weatherList) {
             weather = weatherEntityConvertToModel.converter(time);
             weather.setCity(city);
             weatherSearch = weatherRepository.findByCityAndTimeFrom(city, weather.getTimeFrom());
-            if (weatherSearch != null) {
+           if (weatherSearch != null) {
                 weather.setIdweather(weatherSearch.getIdweather());
             }
             weatherRepository.save(weather);
@@ -46,10 +46,10 @@ public class WeatherServiceImpl implements WeatherService {
     }
 
     @Override
-    public void saveUserForecast(WeatherDTO weatherDTO, User user) {
+    public void saveUserForecast(WeatherDTO weatherDTO, User user, City city) {
         Weather weather = weatherEntityConvertToModel.converter(weatherDTO);
         weather.setUser(user);
-        weather.setCity(cityService.findByCityName("Minsk"));
+        weather.setCity(city);
         weatherRepository.save(weather);
 
     }
@@ -67,5 +67,12 @@ public class WeatherServiceImpl implements WeatherService {
     @Override
     public List<String> getDistinctWindDirection() {
         return weatherRepository.findDistinctWindDirection();
+    }
+
+    @Override
+    public double getAVGTempretureFromTo(City city, java.util.Date from, java.util.Date to)
+    {
+        return weatherRepository.findAVGTemperetureFromTo(city.getIdcity(),from,to);
+
     }
 }

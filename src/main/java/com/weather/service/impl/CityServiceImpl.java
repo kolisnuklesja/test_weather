@@ -21,14 +21,13 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public City findByCityName(String name) {
+    public City findOrCreateByCityName(String name) {
         City city = cityRepository.findByName(name);
         if (city == null)
         {
             city = new City();
             city.setName(name);
-            cityRepository.save(city);
-        }
+            cityRepository.save(city);        }
 
         return city;
     }

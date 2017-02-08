@@ -76,10 +76,16 @@ public class WeatherControllerTest {
     @MockBean
     WeatherService wservice;
 
+    @Mock
+    Authentication authentication;
+
+    @Mock
+    WeatherDTO weatherDTO;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-            }
+    }
 
     @Test
     public void testWelcome() throws Exception {
@@ -107,7 +113,6 @@ public class WeatherControllerTest {
                 .andDo(print());
     }
 
-
     @Test
     public void testRegisterUserWhenDataIncorrect() throws Exception {
         doNothing().when(userValidator).validate(anyObject(), anyObject());
@@ -124,7 +129,6 @@ public class WeatherControllerTest {
         assertEquals("registration", weatherController.registerUser(user, bindingResult));
     }
 
-
     @Test
     public void testGetWeatherWhenCorrectData() throws Exception {
         Time time = new Time();
@@ -136,7 +140,7 @@ public class WeatherControllerTest {
         weatherData.setForecast(forecast);
         when(weatherXMLParser.getTimeListByCity(anyString())).thenReturn(weatherData);
         doNothing().when(weatherService).save(anyObject(), anyObject());
-        doReturn(new City()).when(cityService).findByCityName(anyString());
+        doReturn(new City()).when(cityService).findOrCreateByCityName(anyString());
         assertEquals(Arrays.asList(time), weatherController.getWeather(anyString()));
 
     }
@@ -146,7 +150,7 @@ public class WeatherControllerTest {
 
         when(weatherXMLParser.getTimeListByCity(anyString())).thenReturn(null);
         doNothing().when(weatherService).save(anyObject(), anyObject());
-        doReturn(new City()).when(cityService).findByCityName(anyString());
+        doReturn(new City()).when(cityService).findOrCreateByCityName(anyString());
         assertEquals(null, weatherController.getWeather(anyString()));
 
     }
@@ -158,7 +162,6 @@ public class WeatherControllerTest {
                 .andExpect(view().name("error403"))
                 .andDo(print());
     }
-
 
     @Test
     public void testGetForecastPage() throws Exception {
@@ -180,25 +183,17 @@ public class WeatherControllerTest {
         when(bindingResult.hasErrors()).thenReturn(false);
         when(authentication.getName()).thenReturn("test");
         when(userService.findByUsername(anyString())).thenReturn(user);
-        doNothing().when(weatherService).saveUserForecast(weatherDTO, user);
-        assertEquals("redirect:/login", weatherController.addForecastByUser(weatherDTO,bindingResult,authentication));
+        doNothing().when(weatherService).saveUserForecast(weatherDTO, user,anyObject());
+        assertEquals("redirect:/login", weatherController.addForecastByUser(weatherDTO, bindingResult, authentication));
     }
-
-    @Mock
-    Authentication authentication;
-
-
-    @Mock
-    WeatherDTO weatherDTO;
-
-
 
     @Test
     public void testAddForecastByUserWhenIncorrectData() throws Exception {
         when(bindingResult.hasErrors()).thenReturn(true);
         when(authentication.getName()).thenReturn("test");
         when(userService.findByUsername(anyString())).thenReturn(user);
-        doNothing().when(weatherService).saveUserForecast(weatherDTO, user);
-        assertEquals("userforecast", weatherController.addForecastByUser(weatherDTO,bindingResult,authentication));
+        doNothing().when(weatherService).saveUserForecast(weatherDTO, user, anyObject());
+        assertEquals("userforecast", weatherController.addForecastByUser(weatherDTO, bindingResult, authentication));
 
-}}
+    }
+}

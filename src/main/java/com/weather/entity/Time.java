@@ -85,4 +85,11 @@ public class Time {
     public void setClouds(Clouds clouds) {
         this.clouds = clouds;
     }
+
+    @Override
+    public String toString() {
+        return "Time{" +
+                "from='" + from + '\'' +
+                ", to='" + to + '\'' + '}';
+    }
 }

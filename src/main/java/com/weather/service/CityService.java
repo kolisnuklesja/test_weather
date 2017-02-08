@@ -9,6 +9,6 @@ public interface CityService {
 
     void save(City city);
 
-    City findByCityName(String name);
+    City findOrCreateByCityName(String name);
 
 }

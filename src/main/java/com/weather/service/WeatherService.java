@@ -6,6 +6,9 @@ import com.weather.model.City;
 import com.weather.model.User;
 import com.weather.model.Weather;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -14,11 +17,13 @@ import java.util.List;
 public interface WeatherService {
     void save(List<Time> weatherList, City city);
 
-    void saveUserForecast(WeatherDTO weatherDTO, User user);
+    void saveUserForecast(WeatherDTO weatherDTO, User user, City city);
 
     List<String> getDistinctCloudsName();
 
     List<String> getDistinctWindSpeed();
 
     List<String> getDistinctWindDirection();
+
+    double getAVGTempretureFromTo(City city, java.util.Date from, java.util.Date to);
 }

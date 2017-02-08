@@ -12,7 +12,7 @@ public class City implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idcity")
-    private Long idrole;
+    private Long idcity;
 
     @Column(name = "name")
     private String name;
@@ -21,12 +21,20 @@ public class City implements Serializable{
     private List<Weather> weather;
 
 
-    public Long getIdrole() {
-        return idrole;
+    public Long getIdcity() {
+        return idcity;
     }
 
-    public void setIdrole(Long idrole) {
-        this.idrole = idrole;
+    public void setIdcity(Long idcity) {
+        this.idcity = idcity;
+    }
+
+    public List<Weather> getWeather() {
+        return weather;
+    }
+
+    public void setWeather(List<Weather> weather) {
+        this.weather = weather;
     }
 
     public String getName() {
